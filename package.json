@@ -1,0 +1,14 @@
+{
+  "name": "angular-validators",
+  "version": "1.0.0",
+  "description": "More validators for Angular (2+)",
+  "repository": {
+    "url": "https://github.com/Toxicable/angular-validators/tree/master",
+    "type": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fabian Wiles",
+  "license": "MIT"
+}
