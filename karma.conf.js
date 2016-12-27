@@ -9,15 +9,13 @@ module.exports = function(karma) {
     frameworks: ['jasmine'],
 
     files: [
-      {pattern: '**/*.spec.ts', watched: false}
-      //{ pattern: 'tests.bundle.ts', watched: false }
+      'tests.bundle.js'
     ],
 
     exclude: [],
 
     preprocessors: {
-      '**/*.spec.ts': ['coverage', 'webpack', 'sourcemap']
-      //'tests.bundle.ts': ['coverage', 'webpack', 'sourcemap']
+      'tests.bundle.js': ['coverage', 'webpack', 'sourcemap']
     },
 
     reporters: ['mocha', 'coverage'],
@@ -47,32 +45,13 @@ module.exports = function(karma) {
         extensions: ['', '.ts', '.js']
       },
       module: {
-        preLoaders: [
-          {
-            test: /\.ts$/,
-            loader: 'tslint-loader',
-            exclude: [
-              /node_modules/
-            ]
-          }
-        ],
         loaders: [
           {
             test: /\.ts?$/,
             exclude: /(node_modules)/,
-            loader: 'ts'
+            loader: 'ts-loader'
           }
         ],
-        postLoaders: [
-          {
-            test: /\.(js|ts)$/, loader: 'istanbul-instrumenter',
-            include: path.resolve(__dirname, 'src'),
-            exclude: [
-              /\.(e2e|spec|bundle)\.ts$/,
-              /node_modules/
-            ]
-          }
-        ]
       },
       tslint: {
         emitErrors: false,
