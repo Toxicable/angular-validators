@@ -15,158 +15,98 @@ describe('form validators', () => {
     });
   });
 
+  describe('url', () => {
+    beforeEach(() => {
+      invalidResult = { invalidUrl: true };
+    });
+
+    it('should not error when valid', () => {
+      control.setValue('google.com');
+      expect(FormValidators.urlValidator(control)).toBeNull();
+    });
+
+    it('should error non email', () => {
+      control.setValue('i am not an url');
+      expect(FormValidators.urlValidator(control)).toEqual(invalidResult);
+    });
+  });
+
   describe('email', () => {
     beforeEach(() => {
-      invalidResult = { invalidEmailAddress: true };
-    })
+      invalidResult = { invalidEmail: true };
+    });
 
-    it('Should be valid', () => {
-      control.setValue('iamemail@email.com')
+    it('should not error when valid', () => {
+      control.setValue('iamemail@email.com');
       expect(FormValidators.emailValidator(control)).toBeNull();
     });
 
-    it('Should be invalid', () => {
+    it('should error non email', () => {
       control.setValue('i am not an email')
       expect(FormValidators.emailValidator(control)).toEqual(invalidResult);
     });
   });
 
-  describe('comparison validator', () => {
+  describe('number', () => {
+    beforeEach(() => {
+      invalidResult = { invalidNumber: true };
+    });
+
+    it('should not error on a number', () => {
+      control.setValue('0123456789');
+      expect(FormValidators.numberValidator(control)).toBeNull();
+    });
+
+    it('should error on alpha', () => {
+      control.setValue('a');
+      expect(FormValidators.numberValidator(control)).toEqual(invalidResult);
+    });
+
+    it('should error on symbol', () => {
+      control.setValue('~');
+      expect(FormValidators.numberValidator(control)).toEqual(invalidResult);
+    });
+  });
+
+  describe('alpha', () => {
+    beforeEach(() => {
+      invalidResult = { invalidAlpha: true };
+    });
+
+    it('should not error on any ascii character', () => {
+      control.setValue('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
+      expect(FormValidators.alphaValidator(control)).toBeNull();
+    });
+
+    it('should error on number', () => {
+      control.setValue('1');
+      expect(FormValidators.alphaValidator(control)).toEqual(invalidResult);
+    });
+
+    it('should error on symbol', () => {
+      control.setValue('~');
+      expect(FormValidators.alphaValidator(control)).toEqual(invalidResult);
+    });
+  });
+
+  describe('comparison', () => {
     beforeEach(() => {
       invalidResult = { invalidComparison: true };
     });
 
-    it('should return null when equal', () => {
+    it('should not error when equal', () => {
       group.controls['field1'].setValue('hi');
       group.controls['field2'].setValue('hi');
       let validator = FormValidators.comparisonValidator('field1', 'field2');
       expect(validator(group)).toBeNull();
     });
 
-    it('should return error when not equal', () => {
+    it('should error when not equal', () => {
       group.controls['field1'].setValue('I am not equal');
       group.controls['field2'].setValue('hi');
       let validator = FormValidators.comparisonValidator('field1', 'field2');
       expect(validator(group)).toEqual(invalidResult);
     });
   });
+})
 
-
-// re-testing Angular's Validator wrappers
-  describe('required', () => {
-    it('should error on an empty string',
-      () => { expect(FormValidators.required(new FormControl(''))).toEqual({ 'required': true }); });
-
-    it('should error on null',
-      () => { expect(FormValidators.required(new FormControl(null))).toEqual({ 'required': true }); });
-
-    it('should not error on a non-empty string',
-      () => { expect(FormValidators.required(new FormControl('not empty'))).toBeNull(); });
-
-    it('should accept zero as valid',
-      () => { expect(FormValidators.required(new FormControl(0))).toBeNull(); });
-  })
-
-  describe('requiredTrue', () => {
-    it('should error on false',
-      () => expect(FormValidators.requiredTrue(new FormControl(false))).toEqual({ 'required': true }));
-
-    it('should not error on true',
-      () => expect(FormValidators.requiredTrue(new FormControl(true))).toBeNull());
-  });
-
-  describe('minLength', () => {
-    it('should not error on an empty string',
-      () => { expect(FormValidators.minLength(2)(new FormControl(''))).toBeNull(); });
-
-    it('should not error on null',
-      () => { expect(FormValidators.minLength(2)(new FormControl(null))).toBeNull(); });
-
-    it('should not error on undefined',
-      () => { expect(FormValidators.minLength(2)(new FormControl(null))).toBeNull(); });
-
-    it('should not error on valid strings',
-      () => { expect(FormValidators.minLength(2)(new FormControl('aa'))).toBeNull(); });
-
-    it('should error on short strings', () => {
-      expect(FormValidators.minLength(2)(new FormControl('a'))).toEqual({
-        'minlength': { 'requiredLength': 2, 'actualLength': 1 }
-      });
-    });
-
-    it('should not error when FormArray has valid length', () => {
-      const fa = new FormArray([new FormControl(''), new FormControl('')]);
-      expect(FormValidators.minLength(2)(fa)).toBeNull();
-    });
-
-    it('should error when FormArray has invalid length', () => {
-      const fa = new FormArray([new FormControl('')]);
-      expect(FormValidators.minLength(2)(fa)).toEqual({
-        'minlength': { 'requiredLength': 2, 'actualLength': 1 }
-      });
-    });
-  });
-
-  describe('maxLength', () => {
-    it('should not error on an empty string',
-      () => { expect(FormValidators.maxLength(2)(new FormControl(''))).toBeNull(); });
-
-    it('should not error on null',
-      () => { expect(FormValidators.maxLength(2)(new FormControl(null))).toBeNull(); });
-
-    it('should not error on valid strings',
-      () => { expect(FormValidators.maxLength(2)(new FormControl('aa'))).toBeNull(); });
-
-    it('should error on long strings', () => {
-      expect(FormValidators.maxLength(2)(new FormControl('aaa'))).toEqual({
-        'maxlength': { 'requiredLength': 2, 'actualLength': 3 }
-      });
-    });
-
-    it('should not error when FormArray has valid length', () => {
-      const fa = new FormArray([new FormControl(''), new FormControl('')]);
-      expect(FormValidators.maxLength(2)(fa)).toBeNull();
-    });
-
-    it('should error when FormArray has invalid length', () => {
-      const fa = new FormArray([new FormControl(''), new FormControl('')]);
-      expect(FormValidators.maxLength(1)(fa)).toEqual({
-        'maxlength': { 'requiredLength': 1, 'actualLength': 2 }
-      });
-    });
-  });
-
-  function validator(key: string, error: any) {
-    return function (c: AbstractControl) {
-      const r: { [k: string]: string } = {};
-      r[key] = error;
-      return r;
-    };
-  }
-
-  describe('compose', () => {
-    it('should return null when given null',
-      () => { expect(FormValidators.compose(null)).toBe(null); });
-
-    it('should collect errors from all the validators', () => {
-      const c = FormValidators.compose([validator('a', true), validator('b', true)]);
-      expect(c(new FormControl(''))).toEqual({ 'a': true, 'b': true });
-    });
-
-    it('should run validators left to right', () => {
-      const c = FormValidators.compose([validator('a', 1), validator('a', 2)]);
-      expect(c(new FormControl(''))).toEqual({ 'a': 2 });
-    });
-
-    it('should return null when no errors', () => {
-      const c = FormValidators.compose([FormValidators.nullValidator, FormValidators.nullValidator]);
-      expect(c(new FormControl(''))).toBeNull();
-    });
-
-    it('should ignore nulls', () => {
-      const c = FormValidators.compose([null, FormValidators.required]);
-      expect(c(new FormControl(''))).toEqual({ 'required': true });
-    });
-  });
-
-});

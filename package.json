@@ -1,6 +1,6 @@
 {
   "name": "angular-validators",
-  "version": "1.1.4",
+  "version": "1.2.5",
   "description": "More validators for Angular (2+)",
    "scripts": {
     "karma": "karma start --single-run",

@@ -4,33 +4,38 @@ import { Validators } from '@angular/forms';
 
 export class FormValidators {
 
-  private static emailValidator(control: AbstractControl): InvalidValidationResult {
+ static emailValidator(control: AbstractControl): InvalidValidationResult {
     const regex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-    return control.value.match(regex) ? null : { invalidEmailAddress: true };
+    const validator =  Validators.pattern(regex);
+    return validator(control) == null ? null : { invalidEmail: true };
   }
 
-  private static urlValidator(control: AbstractControl): InvalidValidationResult {
-    const regex = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;;
-    return control.value.match(regex) ? null : { invalidUrl: true };
+ static urlValidator(control: AbstractControl): InvalidValidationResult {
+    const regex = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
+    const validator =  Validators.pattern(regex);
+    return validator(control) == null ? null : { invalidUrl: true };
   }
 
-   private static numberValidator(control: AbstractControl): InvalidValidationResult {
+  static numberValidator(control: AbstractControl): InvalidValidationResult {
     const regex = /^\d/;
-    return control.value.match(regex) ? null : { invalidNumber: true };
+    const validator =  Validators.pattern(regex);
+    return validator(control) == null ? null : { invalidNumber: true };
   }
 
-  private static alphaValidator(control: AbstractControl): InvalidValidationResult {
+ static alphaValidator(control: AbstractControl): InvalidValidationResult {
     const regex = /^[A-Za-z]+$/;
-    return control.value.match ? null : { invalidAlphaChar: true };
+    const validator =  Validators.pattern(regex);
+    return validator(control) == null ? null : { invalidAlpha: true };
   }
 
-  private static comparisonValidator(field1: string, field2: string) {
+// cross field validators
+ static comparisonValidator(field1: string, field2: string) {
     return function (group: FormGroup): InvalidValidationResult {
       return group.controls[field1].value === group.controls[field2].value ? null : { invalidComparison: true };
     };
   }
 
-
+// wrappered validators
   static required(control: AbstractControl): InvalidValidationResult {
     return Validators.required(control);
   }
