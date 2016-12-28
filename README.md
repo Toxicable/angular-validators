@@ -25,6 +25,7 @@ Url            | Needs More Tests
 Number         | Ready
 Alpha          | Ready
 Comparison     | Ready
+Credit Card    | Ready
 
 ###@angular/forms Validators included
 Validator | State 
