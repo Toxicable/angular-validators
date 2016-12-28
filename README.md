@@ -1,3 +1,5 @@
+
+[![npm version](https://badge.fury.io/js/angular-validators.svg)](https://badge.fury.io/js/angular-validators)
 # angular-validators
 More validators for Angular (2+)
 
