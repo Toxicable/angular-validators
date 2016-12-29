@@ -39,6 +39,7 @@ export class FormValidators {
   */
   static comparisonValidator(field1Name: string, field2Name: string) {
     return function (group: FormGroup): InvalidValidationResult {
+      if(group.controls === undefined) { throw new Error('Comparison validator must be on a Form Group not Form Control') }
       let value1 = group.controls[field1Name].value;
       let value2 = group.controls[field2Name].value;
       return value1 === value2 ? null

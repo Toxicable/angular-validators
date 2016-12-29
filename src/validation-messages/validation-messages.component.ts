@@ -1,5 +1,5 @@
 import { Component, Input, Inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ValidationMessagesMapFn } from './validation-messages-map-fn';
 
 @Component({
@@ -9,6 +9,7 @@ template: `<span *ngIf="errorMessage !== null">{{errorMessage}}</span>`
 })
 export class ValidationMessagesComponent {
     @Input() control: FormControl;
+    @Input() group: FormGroup;
     constructor(
       @Inject('validationMessageMapper') private mapper: ValidationMessagesMapFn
     ) { }
