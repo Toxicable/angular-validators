@@ -15,35 +15,35 @@ describe('form validators', () => {
     });
   });
 
-describe('credit card', () => {
-  beforeEach(() => {
-    invalidResult = { invalidCreditCard: true };
+  describe('credit card', () => {
+    beforeEach(() => {
+      invalidResult = { invalidCreditCard: true };
+    });
+    it('should not error for visa', () => {
+      control.setValue('4111111111111111');
+      expect(FormValidators.creditCardValidator(control)).toBeNull();
+    });
+    it('should not error for master card', () => {
+      control.setValue('5555555555554444');
+      expect(FormValidators.creditCardValidator(control)).toBeNull();
+    });
+    it('should not error for american express', () => {
+      control.setValue('378282246310005');
+      expect(FormValidators.creditCardValidator(control)).toBeNull();
+    });
+    it('should not error for diners club', () => {
+      control.setValue('30569309025904');
+      expect(FormValidators.creditCardValidator(control)).toBeNull();
+    });
+    it('should not error for discover', () => {
+      control.setValue('6011111111111117');
+      expect(FormValidators.creditCardValidator(control)).toBeNull();
+    });
+    it('should not error for jbc', () => {
+      control.setValue('3530111333300000');
+      expect(FormValidators.creditCardValidator(control)).toBeNull();
+    });
   });
-  it('should not error for visa', () => {
-    control.setValue('4111111111111111');
-    expect(FormValidators.creditCardValidator(control)).toBeNull();
-  });
-  it('should not error for master card', () => {
-    control.setValue('5555555555554444');
-    expect(FormValidators.creditCardValidator(control)).toBeNull();
-  });
-  it('should not error for american express', () => {
-    control.setValue('378282246310005');
-    expect(FormValidators.creditCardValidator(control)).toBeNull();
-  });
-  it('should not error for diners club', () => {
-    control.setValue('30569309025904');
-    expect(FormValidators.creditCardValidator(control)).toBeNull();
-  });
-  it('should not error for discover', () => {
-    control.setValue('6011111111111117');
-    expect(FormValidators.creditCardValidator(control)).toBeNull();
-  });
-  it('should not error for jbc', () => {
-    control.setValue('3530111333300000');
-    expect(FormValidators.creditCardValidator(control)).toBeNull();
-  });
-});
 
   describe('url', () => {
     beforeEach(() => {
@@ -132,8 +132,15 @@ describe('credit card', () => {
       group.controls['f1'].setValue('I am not equal');
       group.controls['f2'].setValue('hi');
       let validator = FormValidators.comparisonValidator('f1', 'f2');
-      expect(validator(group)).toEqual({invalidComparison:
-        { field1Name: 'f1', field2Name: 'f2', field1Value: 'I am not equal', field2Value: 'hi'}});
+      expect(validator(group)).toEqual({
+        invalidComparison: { field1Name: 'f1', field2Name: 'f2', field1Value: 'I am not equal', field2Value: 'hi' }
+      });
+    });
+
+    it('should throw if passed a form control', () => {
+      let validator = FormValidators.comparisonValidator('f1', 'f2');
+      // cast it to any so we don't get TS errors
+      expect( () => validator(<any>new FormControl(''))).toThrow(new Error('Comparison validator must be on a Form Group not Form Control'));
     });
   });
 });
