@@ -1,6 +1,5 @@
-export interface ValidationMessagesMap{
+export interface ValidationMessagesMap {
   required: string;
-  requiredTrue: string;
   minLength: string;
   maxLength: string;
   invalidCreditCard: string;

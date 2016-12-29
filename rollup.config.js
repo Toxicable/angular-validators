@@ -6,6 +6,7 @@ export default {
   moduleName: 'angular-validators',
   globals: {
     '@angular/core': 'ng.core',
-    '@angular/forms': 'ng.forms'
+    '@angular/forms': 'ng.forms',
+    '@angular/common': 'ng.common'
   }
 }

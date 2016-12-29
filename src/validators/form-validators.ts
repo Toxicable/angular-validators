@@ -37,9 +37,12 @@ export class FormValidators {
   /**
   * A validator that takes the field names of two fields in a group and validates that they're equal
   */
-  static comparisonValidator(field1: string, field2: string) {
+  static comparisonValidator(field1Name: string, field2Name: string) {
     return function (group: FormGroup): InvalidValidationResult {
-      return group.controls[field1].value === group.controls[field2].value ? null : { invalidComparison: true };
+      let value1 = group.controls[field1Name].value;
+      let value2 = group.controls[field2Name].value;
+      return value1 === value2 ? null
+      : { invalidComparison: { field1Name, field2Name, field1Value: value1, field2Value: value2 } };
     };
   }
 

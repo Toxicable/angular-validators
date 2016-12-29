@@ -1,6 +1,5 @@
-import { FormValidators } from '../src/form-validators';
 import { FormControl, FormGroup, FormArray, AbstractControl } from '@angular/forms';
-import { InvalidValidationResult } from '../src/invalid-validation-result';
+import { InvalidValidationResult, FormValidators } from '../src/validators';
 
 describe('@angular/forms wrapped validators', () => {
   describe('required', () => {

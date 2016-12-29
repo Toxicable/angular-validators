@@ -1,6 +1,5 @@
-import { FormValidators } from '../src/form-validators';
 import { FormControl, FormGroup, FormArray, AbstractControl } from '@angular/forms';
-import { InvalidValidationResult } from '../src/invalid-validation-result';
+import { InvalidValidationResult, FormValidators } from '../src/validators';
 
 describe('form validators', () => {
   let control: FormControl;
@@ -10,8 +9,8 @@ describe('form validators', () => {
   beforeEach(() => {
     control = new FormControl('');
     group = new FormGroup({
-      field1: new FormControl(''),
-      field2: new FormControl('')
+      f1: new FormControl(''),
+      f2: new FormControl('')
     });
   });
 
@@ -120,23 +119,21 @@ describe('credit card', () => {
   });
 
   describe('comparison', () => {
-    beforeEach(() => {
-      invalidResult = { invalidComparison: true };
-    });
 
     it('should not error when equal', () => {
-      group.controls['field1'].setValue('hi');
-      group.controls['field2'].setValue('hi');
-      let validator = FormValidators.comparisonValidator('field1', 'field2');
+      group.controls['f1'].setValue('hi');
+      group.controls['f2'].setValue('hi');
+      let validator = FormValidators.comparisonValidator('f1', 'f2');
       expect(validator(group)).toBeNull();
     });
 
     it('should error when not equal', () => {
-      group.controls['field1'].setValue('I am not equal');
-      group.controls['field2'].setValue('hi');
-      let validator = FormValidators.comparisonValidator('field1', 'field2');
-      expect(validator(group)).toEqual(invalidResult);
+      group.controls['f1'].setValue('I am not equal');
+      group.controls['f2'].setValue('hi');
+      let validator = FormValidators.comparisonValidator('f1', 'f2');
+      expect(validator(group)).toEqual({invalidComparison:
+        { field1Name: 'f1', field2Name: 'f2', field1Value: 'I am not equal', field2Value: 'hi'}});
     });
   });
-})
+});
 
