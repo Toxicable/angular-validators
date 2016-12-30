@@ -21,27 +21,27 @@ describe('form validators', () => {
     });
     it('should not error for visa', () => {
       control.setValue('4111111111111111');
-      expect(FormValidators.creditCardValidator(control)).toBeNull();
+      expect(FormValidators.creditCard(control)).toBeNull();
     });
     it('should not error for master card', () => {
       control.setValue('5555555555554444');
-      expect(FormValidators.creditCardValidator(control)).toBeNull();
+      expect(FormValidators.creditCard(control)).toBeNull();
     });
     it('should not error for american express', () => {
       control.setValue('378282246310005');
-      expect(FormValidators.creditCardValidator(control)).toBeNull();
+      expect(FormValidators.creditCard(control)).toBeNull();
     });
     it('should not error for diners club', () => {
       control.setValue('30569309025904');
-      expect(FormValidators.creditCardValidator(control)).toBeNull();
+      expect(FormValidators.creditCard(control)).toBeNull();
     });
     it('should not error for discover', () => {
       control.setValue('6011111111111117');
-      expect(FormValidators.creditCardValidator(control)).toBeNull();
+      expect(FormValidators.creditCard(control)).toBeNull();
     });
     it('should not error for jbc', () => {
       control.setValue('3530111333300000');
-      expect(FormValidators.creditCardValidator(control)).toBeNull();
+      expect(FormValidators.creditCard(control)).toBeNull();
     });
   });
 
@@ -52,12 +52,12 @@ describe('form validators', () => {
 
     it('should not error when valid', () => {
       control.setValue('google.com');
-      expect(FormValidators.urlValidator(control)).toBeNull();
+      expect(FormValidators.url(control)).toBeNull();
     });
 
     it('should error non email', () => {
       control.setValue('i am not an url');
-      expect(FormValidators.urlValidator(control)).toEqual(invalidResult);
+      expect(FormValidators.url(control)).toEqual(invalidResult);
     });
   });
 
@@ -68,12 +68,12 @@ describe('form validators', () => {
 
     it('should not error when valid', () => {
       control.setValue('iamemail@email.com');
-      expect(FormValidators.emailValidator(control)).toBeNull();
+      expect(FormValidators.email(control)).toBeNull();
     });
 
     it('should error non email', () => {
       control.setValue('i am not an email')
-      expect(FormValidators.emailValidator(control)).toEqual(invalidResult);
+      expect(FormValidators.email(control)).toEqual(invalidResult);
     });
   });
 
@@ -84,17 +84,17 @@ describe('form validators', () => {
 
     it('should not error on a number', () => {
       control.setValue('0123456789');
-      expect(FormValidators.numberValidator(control)).toBeNull();
+      expect(FormValidators.number(control)).toBeNull();
     });
 
     it('should error on alpha', () => {
       control.setValue('a');
-      expect(FormValidators.numberValidator(control)).toEqual(invalidResult);
+      expect(FormValidators.number(control)).toEqual(invalidResult);
     });
 
     it('should error on symbol', () => {
       control.setValue('~');
-      expect(FormValidators.numberValidator(control)).toEqual(invalidResult);
+      expect(FormValidators.number(control)).toEqual(invalidResult);
     });
   });
 
@@ -105,17 +105,17 @@ describe('form validators', () => {
 
     it('should not error on any ascii character', () => {
       control.setValue('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz');
-      expect(FormValidators.alphaValidator(control)).toBeNull();
+      expect(FormValidators.alpha(control)).toBeNull();
     });
 
     it('should error on number', () => {
       control.setValue('1');
-      expect(FormValidators.alphaValidator(control)).toEqual(invalidResult);
+      expect(FormValidators.alpha(control)).toEqual(invalidResult);
     });
 
     it('should error on symbol', () => {
       control.setValue('~');
-      expect(FormValidators.alphaValidator(control)).toEqual(invalidResult);
+      expect(FormValidators.alpha(control)).toEqual(invalidResult);
     });
   });
 
@@ -124,21 +124,21 @@ describe('form validators', () => {
     it('should not error when equal', () => {
       group.controls['f1'].setValue('hi');
       group.controls['f2'].setValue('hi');
-      let validator = FormValidators.comparisonValidator('f1', 'f2');
+      let validator = FormValidators.comparison('f1', 'f2');
       expect(validator(group)).toBeNull();
     });
 
     it('should error when not equal', () => {
       group.controls['f1'].setValue('I am not equal');
       group.controls['f2'].setValue('hi');
-      let validator = FormValidators.comparisonValidator('f1', 'f2');
+      let validator = FormValidators.comparison('f1', 'f2');
       expect(validator(group)).toEqual({
         invalidComparison: { field1Name: 'f1', field2Name: 'f2', field1Value: 'I am not equal', field2Value: 'hi' }
       });
     });
 
     it('should throw if passed a form control', () => {
-      let validator = FormValidators.comparisonValidator('f1', 'f2');
+      let validator = FormValidators.comparison('f1', 'f2');
       // cast it to any so we don't get TS errors
       expect( () => validator(<any>new FormControl(''))).toThrow(new Error('Comparison validator must be on a Form Group not Form Control'));
     });

@@ -23,7 +23,7 @@ export class NgcSpecComponent {
     this.myForm = fb.group({
       password: ['', [FormValidators.required]],
       confirmPassword: ['']
-    }, {validator: FormValidators.comparisonValidator('password', 'confirmPassword')})
+    }, {validator: FormValidators.comparison('password', 'confirmPassword')})
   }
 
  }

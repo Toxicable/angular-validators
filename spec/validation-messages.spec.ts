@@ -8,7 +8,10 @@ import { ValidationMessagesComponent } from '../';
 import { FormValidators } from '../';
 import { defaultValidationMessagesMapper } from '../src/validation-messages/validation-messages-map-fn';
 
-describe('App', () => {
+
+import 'rxjs/add/operator/first';
+
+describe('validation messages component', () => {
   let comp: ValidationMessagesComponent;
   let fixture: ComponentFixture<ValidationMessagesComponent>;
   let de: DebugElement;
@@ -16,30 +19,28 @@ describe('App', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ValidationMessagesComponent], // declare the test component
+      declarations: [ ValidationMessagesComponent ],
       providers: [{ provide: 'validationMessageMapper', useValue: defaultValidationMessagesMapper}]
     });
     fixture = TestBed.createComponent(ValidationMessagesComponent);
-    comp = fixture.componentInstance; // BannerComponent test instance
+    comp = fixture.componentInstance;
   });
 
-  it('something', () => {
-    let control = new FormControl('', FormValidators.required);
-    comp.control = control;
-    control.markAsTouched();
-    //fixture.detectChanges;
+  it('something elsse', () => {
+    el = fixture.debugElement.query(By.css('span')).nativeElement;
+    comp.control = new FormControl('', FormValidators.required);
 
+    comp.ngOnInit();
+    comp.control.markAsTouched();
 
-    expect(comp.errorMessage).toEqual('Required');
-  })
+    comp.errorMessages$.first().subscribe(msg => {
+      expect(msg).toEqual('Required');
+    });
 
-  it('something elsse', () =>{
-    let control = new FormControl('', FormValidators.required);
-    comp.control = control;
-    control.markAsTouched();
-    fixture.detectChanges();
-    de = fixture.debugElement.query(By.css('span'));
-    el = de.nativeElement;
-    expect(el.innerText).toEqual('Required')
-  })
+    comp.control.setValue('');
+
+    comp.errorMessages$.first().subscribe(msg => {
+      expect(msg).toBeNull();
+    });
+  });
 });
