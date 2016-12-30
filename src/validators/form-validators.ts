@@ -39,11 +39,11 @@ export class FormValidators {
   */
   static comparison(field1Name: string, field2Name: string) {
     return function (group: FormGroup): InvalidValidationResult {
-      if(group.controls === undefined) { throw new Error('Comparison validator must be on a Form Group not Form Control') }
+      if (group.controls === undefined) { throw new Error('Comparison validator must be on a Form Group not Form Control') }
       let value1 = group.controls[field1Name].value;
       let value2 = group.controls[field2Name].value;
       return value1 === value2 ? null
-      : { invalidComparison: { field1Name, field2Name, field1Value: value1, field2Value: value2 } };
+        : { invalidComparison: { field1Name, field2Name, field1Value: value1, field2Value: value2 } };
     };
   }
 

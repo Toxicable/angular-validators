@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms'
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By }              from '@angular/platform-browser';
-import { DebugElement }    from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 import { ValidationMessagesComponent } from '../';
 import { FormValidators } from '../';
@@ -19,28 +19,50 @@ describe('validation messages component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ ValidationMessagesComponent ],
-      providers: [{ provide: 'validationMessageMapper', useValue: defaultValidationMessageMapper}]
+      declarations: [ValidationMessagesComponent],
+      providers: [{ provide: 'validationMessageMapper', useValue: defaultValidationMessageMapper }]
     });
     fixture = TestBed.createComponent(ValidationMessagesComponent);
     comp = fixture.componentInstance;
+    el = fixture.debugElement.query(By.css('span')).nativeElement;
   });
 
-  it('something elsse', () => {
-    el = fixture.debugElement.query(By.css('span')).nativeElement;
+  it('should display an error message for a control', async(() => {
     comp.control = new FormControl('', FormValidators.required);
 
     comp.ngOnInit();
     comp.control.markAsTouched();
-
     comp.errorMessages$.first().subscribe(msg => {
-      expect(msg).toEqual('Required');
+      expect(msg).not.toBeNull();
     });
+    fixture.detectChanges();
 
-    comp.control.setValue('');
+  }));
 
+  it('should display an error message for a group', async(() => {
+    comp.group = new FormGroup({
+      password: new FormControl('a'),
+      confirmPassword: new FormControl('')
+    },
+      FormValidators.comparison('password', 'confirmPassword')
+    );
+
+    comp.ngOnInit();
+    comp.group.markAsTouched();
+    comp.errorMessages$.first().subscribe(msg => {
+      expect(msg).not.toBeNull();
+    });
+    fixture.detectChanges();
+  }));
+
+  it('should not display an error if it has not been touched', async(() => {
+    comp.control = new FormControl('', FormValidators.required);
+
+    comp.ngOnInit();
     comp.errorMessages$.first().subscribe(msg => {
       expect(msg).toBeNull();
     });
-  });
+    fixture.detectChanges();
+
+  }));
 });
