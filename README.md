@@ -7,12 +7,26 @@ More validators for Angular (2+)
 ```
 npm install --save angular-validators
 ```
+###Validators
 ```
+//imporst
 import { FormValidators } from 'angular-validators';
-```
-
-```
+//usage
 email: ['', FormValidators.required]
+```
+###Validation Messages
+```
+//imports
+import { ValidationMessagesModule } from 'angular-validation';
+//module imports
+imports: [ ValidationMessagesModule.withConfig() ] //provides default config
+//-or-
+imports: [ ValidationMessagesModule.withConfig(myCustomValidationMessageMapperFn) ] //provides your own maper function
+//please not that `myCustomValidationMessageMapperFn` must be of type `ValidationMessageMapperFn`
+//usage
+<av-validation-messages [control]="myForm.controls.password"></av-validation-messages>
+//-or-
+<av-validation-messages [group]="myForm"></av-validation-messages>
 ```
 
 This package incldues all of Angulars inbuilt validators so you don't have to use them from two different places
