@@ -6,7 +6,7 @@ import { DebugElement }    from '@angular/core';
 
 import { ValidationMessagesComponent } from '../';
 import { FormValidators } from '../';
-import { defaultValidationMessagesMapper } from '../src/validation-messages/validation-messages-map-fn';
+import { defaultValidationMessageMapper } from '../src/validation-messages/validation-messages-map-fn';
 
 
 import 'rxjs/add/operator/first';
@@ -20,7 +20,7 @@ describe('validation messages component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ ValidationMessagesComponent ],
-      providers: [{ provide: 'validationMessageMapper', useValue: defaultValidationMessagesMapper}]
+      providers: [{ provide: 'validationMessageMapper', useValue: defaultValidationMessageMapper}]
     });
     fixture = TestBed.createComponent(ValidationMessagesComponent);
     comp = fixture.componentInstance;

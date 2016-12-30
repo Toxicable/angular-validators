@@ -1,4 +1,4 @@
-export interface ValidationMessagesMap {
+export interface ValidationMessageMap {
   required: string;
   minLength: string;
   maxLength: string;

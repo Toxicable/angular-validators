@@ -1,10 +1,10 @@
-import { ValidationMessagesMap } from './validation-messages-map';
+import { ValidationMessageMap } from './validation-messages-map';
 
-export interface ValidationMessagesMapFn {
+export interface ValidationMessageMapperFn {
   (validatorName: string, validatorValue?: any): string;
 }
-export function defaultValidationMessagesMapper(validatorName: string, validatorValue?: any): string {
-  let config: ValidationMessagesMap = {
+export function defaultValidationMessageMapper(validatorName: string, validatorValue?: any): string {
+  let config: ValidationMessageMap = {
     required: 'Required',
     minLength: `Minimum length ${validatorValue.requiredLength}`,
     maxLength: `Minimum length ${validatorValue.requiredLength}`,
