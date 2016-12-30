@@ -9,7 +9,7 @@ npm install --save angular-validators
 ```
 ###Validators
 ```
-//imporst
+//imports
 import { FormValidators } from 'angular-validators';
 //usage
 email: ['', FormValidators.required]
