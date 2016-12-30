@@ -1,6 +1,6 @@
 var path = require('path');
 
-module.exports = function(karma) {
+module.exports = function (karma) {
   'use strict';
 
   karma.set({
@@ -37,7 +37,13 @@ module.exports = function(karma) {
     logLevel: karma.LOG_INFO,
     autoWatch: true,
     singleRun: false,
-    webpackServer: { noInfo: true },
+    webpackServer: {
+      noInfo: true,
+      stats: {
+        chunks: false,
+        assets: false
+      },
+    },
     webpack: {
       devtool: 'inline-source-map',
       resolve: {
