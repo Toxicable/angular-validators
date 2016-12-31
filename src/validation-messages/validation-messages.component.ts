@@ -8,7 +8,6 @@ import 'rxjs/add/operator/map';
   selector: 'av-validation-messages',
   template: `<span>{{errorMessages$ | async}}</span>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-
 })
 export class ValidationMessagesComponent {
   @Input() control: FormControl;

@@ -1,6 +1,6 @@
 {
   "name": "angular-validators",
-  "version": "0.0.0-alpha-1",
+  "version": "0.0.0-alpha-2",
   "description": "More validators for Angular (2+)",
    "scripts": {
     "karma": "karma start --single-run",
@@ -25,7 +25,7 @@
     "@angular/forms":"^2.0.0",
     "@angular/core": "^2.0.0",
     "@angular/common": "^2.0.0",
-    "ngrx": "^5.0.0"
+    "rxjs": "^5.0.0"
   },
   "devDependencies": {
     "@angular/forms":"^2.0.0",
