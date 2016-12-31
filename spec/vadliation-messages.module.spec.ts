@@ -4,65 +4,59 @@ import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ValidationMessagesComponent, ValidationMessagesModule } from '../';
+import { ValidationMessagesComponent, ValidationMessagesModule, ValidationMessageMapperFn } from '../';
 import { FormValidators } from '../';
 import { defaultValidationMessageMapper } from '../src/validation-messages/validation-messages-map-fn';
 
-
 import 'rxjs/add/operator/first';
 
-describe('validation messages component', () => {
+describe('validation messages module', () => {
   let comp: ValidationMessagesComponent;
   let fixture: ComponentFixture<ValidationMessagesComponent>;
   let de: DebugElement;
   let el: HTMLElement;
 
-  beforeEach(() => {
+  it('should create module with default config', async(() => {
     TestBed.configureTestingModule({
-      declarations: [ValidationMessagesComponent],
-      providers: [{ provide: 'validationMessageMapper', useValue: defaultValidationMessageMapper }]
+      imports: [ValidationMessagesModule]
     });
     fixture = TestBed.createComponent(ValidationMessagesComponent);
     comp = fixture.componentInstance;
     el = fixture.debugElement.query(By.css('span')).nativeElement;
-  });
 
-  it('should display an error message for a control', async(() => {
     comp.control = new FormControl('', FormValidators.required);
 
     comp.ngOnInit();
     comp.control.markAsTouched();
     comp.errorMessages$.first().subscribe(msg => {
-      expect(msg).not.toBeNull();
-    });
-    fixture.detectChanges();
-
-  }));
-
-  it('should display an error message for a group', async(() => {
-    comp.group = new FormGroup({
-      password: new FormControl('a'),
-      confirmPassword: new FormControl('')
-    },
-      FormValidators.comparison('password', 'confirmPassword')
-    );
-
-    comp.ngOnInit();
-    comp.group.markAsTouched();
-    comp.errorMessages$.first().subscribe(msg => {
-      expect(msg).not.toBeNull();
+      expect(msg).toBe('Required');
     });
     fixture.detectChanges();
   }));
 
-  it('should not display an error if it has not been touched', async(() => {
+  it('should create module with custom config', () => {
+    const mapper: ValidationMessageMapperFn = function(a: string, b: any): string{
+      const config = {
+        required: 'Field Required'
+      };
+      return config[a];
+    };
+
+    TestBed.configureTestingModule({
+      imports: [ValidationMessagesModule.withConfig(mapper)]
+    });
+    fixture = TestBed.createComponent(ValidationMessagesComponent);
+    comp = fixture.componentInstance;
+    el = fixture.debugElement.query(By.css('span')).nativeElement;
+
     comp.control = new FormControl('', FormValidators.required);
 
     comp.ngOnInit();
+    comp.control.markAsTouched();
     comp.errorMessages$.first().subscribe(msg => {
-      expect(msg).toBeNull();
+      expect(msg).toBe('Field Required');
     });
     fixture.detectChanges();
+  });
 
-  }));
 });
