@@ -24,7 +24,8 @@
   "peerDependencies": {
     "@angular/forms":"^2.0.0",
     "@angular/core": "^2.0.0",
-    "@angular/common": "^2.0.0"
+    "@angular/common": "^2.0.0",
+    "ngrx": "^5.0.0"
   },
   "devDependencies": {
     "@angular/forms":"^2.0.0",

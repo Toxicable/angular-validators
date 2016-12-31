@@ -3,18 +3,19 @@ import { CommonModule } from '@angular/common';
 import { ValidationMessagesComponent } from './validation-messages.component';
 import { defaultValidationMessageMapper, ValidationMessageMapperFn } from './validation-messages-map-fn';
 
-const defaultNgModule: NgModule = {
-    imports: [ CommonModule ],
+@NgModule({
+    imports: [ CommonModule, ],
     declarations: [ ValidationMessagesComponent ],
     exports: [ ValidationMessagesComponent ],
-    providers: [ { provide: 'validationMessageMapper', useValue: defaultValidationMessageMapper}]
-  };
-
-@NgModule(defaultNgModule)
+  })
 export class ValidationMessagesBaseModule {
 }
 
-@NgModule(defaultNgModule)
+@NgModule({
+  providers: [ { provide: 'validationMessageMapper', useValue: defaultValidationMessageMapper}],
+  imports : [ ValidationMessagesBaseModule ],
+  exports: [ ValidationMessagesComponent ]
+})
 export class ValidationMessagesModule {
   static withConfig(messageMapperFn: ValidationMessageMapperFn): ModuleWithProviders {
     if (!messageMapperFn){
