@@ -16,7 +16,10 @@ export class ValidationMessagesBaseModule {
 
 @NgModule(defaultNgModule)
 export class ValidationMessagesModule {
-  static withConfig(messageMapperFn?: ValidationMessageMapperFn): ModuleWithProviders {
+  static withConfig(messageMapperFn: ValidationMessageMapperFn): ModuleWithProviders {
+    if (!messageMapperFn){
+      throw new Error('if you are using ValidationMessagesModule.withConfig(mapperFn) you must pass a custom mapper function, otheriwse use ValidationMessagesModule');
+    }
     return {
       ngModule: ValidationMessagesBaseModule,
       providers: [ { provide: 'validationMessageMapper', useValue: messageMapperFn } ]

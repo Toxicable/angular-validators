@@ -35,7 +35,7 @@ describe('validation messages module', () => {
   }));
 
   it('should create module with custom config', () => {
-    const mapper: ValidationMessageMapperFn = function(a: string, b: any): string{
+    const mapper: ValidationMessageMapperFn = function (a: string, b: any): string {
       const config = {
         required: 'Field Required'
       };
@@ -57,6 +57,16 @@ describe('validation messages module', () => {
       expect(msg).toBe('Field Required');
     });
     fixture.detectChanges();
+  });
+
+  it('should throw when no undefined is passed as mapper fn', () => {
+    expect(() => ValidationMessagesModule.withConfig(undefined))
+      .toThrowError('if you are using ValidationMessagesModule.withConfig(mapperFn) you must pass a custom mapper function, otheriwse use ValidationMessagesModule');
+  });
+
+  it('should throw when no null is passed as mapper fn', () => {
+    expect(() => ValidationMessagesModule.withConfig(null))
+      .toThrowError('if you are using ValidationMessagesModule.withConfig(mapperFn) you must pass a custom mapper function, otheriwse use ValidationMessagesModule');
   });
 
 });

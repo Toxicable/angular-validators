@@ -31,7 +31,7 @@ export class NgcSpecComponent {
 @NgModule({
   imports: [
     CommonModule,
-    ValidationMessagesModule.withConfig(),
+    ValidationMessagesModule,
     ReactiveFormsModule
   ],
   declarations: [ NgcSpecComponent ]
