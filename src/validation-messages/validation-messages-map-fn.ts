@@ -13,7 +13,8 @@ export function defaultValidationMessageMapper(validatorName: string, validatorV
     invalidEmail: 'Invalid email address',
     invalidNumber: `Invalid number`,
     invalidAlpha: 'Invalid character',
-    invalidComparison: `Field: ${validatorValue.field1Name} must match ${validatorValue.field2Name}`
+    invalidComparison: `Field: ${validatorValue.field1Name} must match ${validatorValue.field2Name}`,
+    invalidFirstCapital: 'First character must be capital'
   };
   return config[validatorName];
 }

@@ -15,6 +15,25 @@ describe('form validators', () => {
     });
   });
 
+  describe('first cap', () => {
+    beforeEach(() => {
+      invalidResult = { invalidFirstCapital: true };
+    });
+    it('should not error when frst letter is caps', () => {
+      control.setValue('Aa');
+      expect(FormValidators.firstCap(control)).toBeNull();
+    });
+    it('should error when frst letter is not caps', () => {
+      control.setValue('aa');
+      expect(FormValidators.firstCap(control)).toEqual(invalidResult);
+    });
+    it('should error passed a number', () => {
+      control.setValue('55');
+      expect(FormValidators.firstCap(control)).toEqual(invalidResult);
+    });
+
+  })
+
   describe('credit card', () => {
     beforeEach(() => {
       invalidResult = { invalidCreditCard: true };
@@ -140,7 +159,7 @@ describe('form validators', () => {
     it('should throw if passed a form control', () => {
       let validator = FormValidators.comparison('f1', 'f2');
       // cast it to any so we don't get TS errors
-      expect( () => validator(<any>new FormControl(''))).toThrow(new Error('Comparison validator must be on a Form Group not Form Control'));
+      expect(() => validator(<any>new FormControl(''))).toThrow(new Error('Comparison validator must be on a Form Group not Form Control'));
     });
   });
 });

@@ -24,9 +24,8 @@ export class ValidationMessagesComponent {
         .map((status: string) => {
           if (this.control.touched && status === 'INVALID') {
             // since it's invalid we assume that it has at least 1 error in the `this.group.errors` object
-            let keys = Object.keys(this.control.errors);
-            let first = keys.shift();
-            return this.mapper(first, this.control.errors[first]);
+            let errorKeys = Object.keys(this.control.errors);
+            return this.mapper(errorKeys[0], this.control.errors[errorKeys[0]]);
           }
           return null;
         });

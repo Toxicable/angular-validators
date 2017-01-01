@@ -33,6 +33,12 @@ export class FormValidators {
     return validator(control) == null ? null : { invalidAlpha: true };
   }
 
+  static firstCap(control: AbstractControl): InvalidValidationResult {
+    const regex = /^[A-Z]/;
+    const validator = Validators.pattern(regex);
+    return validator(control) == null ? null : { invalidFirstCapital: true };
+  }
+
   // cross field validators
   /**
   * A validator that takes the field names of two fields in a group and validates that they're equal

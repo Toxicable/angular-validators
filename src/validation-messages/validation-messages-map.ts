@@ -8,4 +8,5 @@ export interface ValidationMessageMap {
   invalidNumber: string;
   invalidAlpha: string;
   invalidComparison: string;
+  invalidFirstCapital: string;
 }
