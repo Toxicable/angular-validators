@@ -1,20 +1,14 @@
 
 [![npm version](https://badge.fury.io/js/angular-validators.svg)](https://badge.fury.io/js/angular-validators)
 # angular-validators
-More validators for Angular (2+)
+Form Validators and a component to display them
 
 ##Installation
 ```
 npm install --save angular-validators
 ```
-###Validators
-```
-//imports
-import { FormValidators } from 'angular-validators';
-//usage
-email: ['', FormValidators.required]
-```
 ###Validation Messages
+A component to easily display validation messages
 ```
 //imports
 import { ValidationMessagesModule } from 'angular-validation';
@@ -28,28 +22,36 @@ imports: [ ValidationMessagesModule.withConfig(myCustomValidationMessageMapperFn
 //-or-
 <av-validation-messages [group]="myForm"></av-validation-messages>
 ```
+###Validators
+```
+//imports
+import { FormValidators } from 'angular-validators';
+//usage
+email: ['', FormValidators.required]
+```
 
 This package incldues all of Angulars inbuilt validators so you don't have to use them from two different places
-Plus it adds some more helpful ones 
 
- Validator     | State     
--------------- | --------- 
-Email          | Needs More Tests
-Url            | Needs More Tests
-Number         | Ready
-Alpha          | Ready
-Comparison     | Ready
-Credit Card    | Ready
+ Validators       
+--------------
+Email         
+Url      
+Number     
+Alpha    
+Credit Card(Visa, Master Card, American Express, Diners, Discover, JBC)
 
-###@angular/forms Validators included
-Validator | State 
---------------|-------
-Required      | Ready
-RequiredTrue  | Ready     
-MinLength     | Ready     
-MaxLength     | Ready     
-Null          | Ready     
-Compose       | Ready     
-ComposeAsync  | Ready    
+Cross Field Validator
+------
+Comparison 
+
+@angular/form Validators
+--------------
+Required      
+RequiredTrue  
+MinLength      
+MaxLength     
+Null         
+Compose      
+ComposeAsync 
 
 Feel free to suggest other validators to be included 
