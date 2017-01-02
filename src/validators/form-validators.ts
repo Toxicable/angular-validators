@@ -1,8 +1,53 @@
-import { FormControl, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  AbstractControl,
+  FormArray
+} from '@angular/forms';
 import { InvalidValidationResult } from './invalid-validation-result';
 import { Validators } from '@angular/forms';
 
 export class FormValidators {
+
+  static range(min?: number, max?: number): ValidatorFn {
+    return function (control: AbstractControl): InvalidValidationResult {
+      let value = parseInt(control.value);
+      return value > max || value < min ? { range: { value, min, max } } : null;
+    };
+  }
+
+  static minValue(min: number): ValidatorFn {
+    return function(control: AbstractControl): InvalidValidationResult {
+      const validator = FormValidators.range(min);
+      const value = parseInt(control.value);
+      return validator(control) === null ? null : { min: { value, min: min } };
+    };
+  }
+
+  static maxValue(max: number): ValidatorFn {
+    return function (control: AbstractControl): InvalidValidationResult {
+      const validator = FormValidators.range(undefined, max);
+      const value = parseInt(control.value);
+      return validator(control) === null ? null : { max: { value, max: max } };
+    };
+  }
+
+  // static arrayAtLeastOneHasToBeRequired(...fields: string[]): ValidatorFn {
+  //   return function (array: FormArray): InvalidValidationResult {
+  //     let validControls = array.controls.filter((group: FormGroup) => {
+
+  //       let validFields = fields.filter((field) => {
+  //         return FormValidators.required(group.controls[field]) == null;
+  //       });
+  //       return validFields.length === fields.length;
+  //     });
+  //     return validControls.length > 1 ? null : { invalidSomethng: true };
+  //   }
+  // }
+
+
+
   static creditCard(control: AbstractControl): InvalidValidationResult {
     const regex = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
     const validator = Validators.pattern(regex);

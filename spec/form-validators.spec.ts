@@ -15,6 +15,45 @@ describe('form validators', () => {
     });
   });
 
+  describe('range', () => {
+    it('should error when out of range', () => {
+      let validator = FormValidators.range(5, 10);
+      control.setValue('2');
+      expect(validator(control)).toEqual({ range: { value: 2, min: 5, max: 10 } });
+    });
+    it('should not error when in range', () => {
+      let validator = FormValidators.range(5, 10);
+      control.setValue('6');
+      expect(validator(control)).toBeNull();
+    });
+  });
+
+  describe('min', () => {
+    it('should error when below min', () => {
+      let validator = FormValidators.minValue(5);
+      control.setValue('2');
+      expect(validator(control)).toEqual({ min: { value: 2, min: 5 } });
+    });
+    it('should not error when above min', () => {
+      let validator = FormValidators.minValue(5);
+      control.setValue('6');
+      expect(validator(control)).toBeNull();
+    });
+  });
+
+  describe('max', () => {
+    it('should error when above just max', () => {
+      let validator = FormValidators.maxValue(5);
+      control.setValue('6');
+      expect(validator(control)).toEqual({ max: { value: 6, max: 5 } });
+    });
+    it('should not error when below max', () => {
+      let validator = FormValidators.maxValue(5);
+      control.setValue('2');
+      expect(validator(control)).toBeNull();
+    });
+  });
+
   describe('first cap', () => {
     beforeEach(() => {
       invalidResult = { invalidFirstCapital: true };

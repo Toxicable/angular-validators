@@ -9,4 +9,7 @@ export interface ValidationMessageMap {
   invalidAlpha: string;
   invalidComparison: string;
   invalidFirstCapital: string;
+  range: string;
+  min: string;
+  max: string;
 }
