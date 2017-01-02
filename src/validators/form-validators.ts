@@ -41,15 +41,37 @@ export class FormValidators {
 
   // cross field validators
   /**
-  * A validator that takes the field names of two fields in a group and validates that they're equal
+  * Depricated
   */
-  static comparison(field1Name: string, field2Name: string) {
+  static compareFields(field1Name: string, field2Name: string) {
     return function (group: FormGroup): InvalidValidationResult {
       if (group.controls === undefined) { throw new Error('Comparison validator must be on a Form Group not Form Control') }
       let value1 = group.controls[field1Name].value;
       let value2 = group.controls[field2Name].value;
       return value1 === value2 ? null
         : { invalidComparison: { field1Name, field2Name, field1Value: value1, field2Value: value2 } };
+    };
+  }
+
+  /**
+  * Compares the values of all fields passed
+  */
+  static comparison(...fields: string[]) {
+    return function (group: FormGroup): InvalidValidationResult {
+      if (group.controls === undefined) { throw new Error('Comparison validator must be on a Form Group not Form Control'); }
+      if (!fields) { throw new Error('You must pass the names of at least 2 fields'); }
+      if (fields.length < 2) { throw new Error('You must pass the names of at least 2 fields'); }
+
+      for (let fieldName of fields) {
+
+        let field = group.controls[fieldName];
+        if (!field) { throw new Error(`Field: ${fieldName} undefined, are you sure that ${fieldName} exists in`); }
+
+        if (field.value !== group.controls[fields[0]].value) {
+          return { invalidComparison: { invalidField: fieldName, comparedField: fields[0] } };
+        }
+      }
+      return null;
     };
   }
 

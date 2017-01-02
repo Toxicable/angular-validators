@@ -27,16 +27,6 @@ describe('validation messages component', () => {
     el = fixture.debugElement.query(By.css('span')).nativeElement;
   });
 
-
-it('should show n=me spans', () => {
-  debugger
-  let t = fixture.debugElement.queryAll(By.css('span'));
-  console.log(t)
-  console.log(t[0])
-  let first = t[0].nativeElement;
-console.log(first)
-})
-
   it('should display an error message for a control', async(() => {
     comp.control = new FormControl('', FormValidators.required);
 

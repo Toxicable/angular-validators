@@ -60,13 +60,11 @@ describe('validation messages module', () => {
   });
 
   it('should throw when no undefined is passed as mapper fn', () => {
-    expect(() => ValidationMessagesModule.withConfig(undefined))
-      .toThrowError('if you are using ValidationMessagesModule.withConfig(mapperFn) you must pass a custom mapper function, otheriwse use ValidationMessagesModule');
+    expect(() => ValidationMessagesModule.withConfig(undefined)).toThrow();
   });
 
   it('should throw when no null is passed as mapper fn', () => {
-    expect(() => ValidationMessagesModule.withConfig(null))
-      .toThrowError('if you are using ValidationMessagesModule.withConfig(mapperFn) you must pass a custom mapper function, otheriwse use ValidationMessagesModule');
+  expect(() => ValidationMessagesModule.withConfig(null)).toThrow();
   });
 
 });

@@ -151,15 +151,13 @@ describe('form validators', () => {
       group.controls['f1'].setValue('I am not equal');
       group.controls['f2'].setValue('hi');
       let validator = FormValidators.comparison('f1', 'f2');
-      expect(validator(group)).toEqual({
-        invalidComparison: { field1Name: 'f1', field2Name: 'f2', field1Value: 'I am not equal', field2Value: 'hi' }
-      });
+      expect(validator(group)).toEqual({ invalidComparison: { invalidField: 'f2', comparedField: 'f1' } });
     });
 
     it('should throw if passed a form control', () => {
       let validator = FormValidators.comparison('f1', 'f2');
       // cast it to any so we don't get TS errors
-      expect(() => validator(<any>new FormControl(''))).toThrow(new Error('Comparison validator must be on a Form Group not Form Control'));
+      expect(() => validator(<any>new FormControl(''))).toThrow();
     });
   });
 });
