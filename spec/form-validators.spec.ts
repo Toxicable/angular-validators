@@ -15,6 +15,42 @@ describe('form validators', () => {
     });
   });
 
+  describe('requiredGroup', () => {
+    it('should error when controls are empty', () => {
+      group = new FormGroup({ name: new FormControl(''), age: new FormControl('') });
+      expect(FormValidators.requiredGroup(group)).not.toBeNull();
+    });
+    it('should error when one control is empty', () => {
+      group = new FormGroup({ name: new FormControl('2'), age: new FormControl('') });
+      expect(FormValidators.requiredGroup(group)).not.toBeNull();
+    });
+    it('should not error when group has all values', () => {
+      group = new FormGroup({ name: new FormControl('2'), age: new FormControl('2') });
+      expect(FormValidators.requiredGroup(group)).toBeNull();
+    });
+  });
+
+  describe('single req in array', () => {
+    it('should not error when one is filled out', () => {
+      let groupFactory = () => new FormGroup({ name: new FormControl(''), age: new FormControl('') });
+      let array = new FormArray([
+        new FormGroup({ name: new FormControl(''), age: new FormControl('') }),
+        new FormGroup({ name: new FormControl('a'), age: new FormControl('a') })
+      ]);
+      let validator = FormValidators.arrayAtLeastOneHasToBeRequired();
+      expect(validator(array)).toBeNull();
+    });
+    it('should error when ', () => {
+      let groupFactory = () => new FormGroup({ name: new FormControl(''), age: new FormControl('') });
+      let array = new FormArray([
+        new FormGroup({ name: new FormControl(''), age: new FormControl('') }),
+        new FormGroup({ name: new FormControl(''), age: new FormControl('') })
+      ]);
+      let validator = FormValidators.arrayAtLeastOneHasToBeRequired();
+      expect(validator(array)).not.toBeNull();
+    });
+  });
+
   describe('range', () => {
     it('should error when out of range', () => {
       let validator = FormValidators.range(5, 10);

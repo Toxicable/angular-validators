@@ -46,7 +46,7 @@ describe('validation messages component', () => {
     },
       FormValidators.comparison('password', 'confirmPassword')
     );
-
+    el = fixture.debugElement.query(By.css('span')).nativeElement;
     comp.ngOnInit();
     comp.group.markAsTouched();
     comp.errorMessages$.first().subscribe(msg => {
