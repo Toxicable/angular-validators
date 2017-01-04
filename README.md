@@ -2,7 +2,7 @@
 [![npm version](https://badge.fury.io/js/angular-validators.svg)](https://badge.fury.io/js/angular-validators)
 ![Join the chat at https://gitter.im/angular/angular](https://badges.gitter.im/Join%20Chat.svg)
 # angular-validators
-Form Validators and a component to display them
+Form Validators and a component to display them  
 Feel free to ping on on the angular/angular gitter if you have any issues
 
 ##Installation
