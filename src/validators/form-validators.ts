@@ -10,6 +10,11 @@ import { Validators } from '@angular/forms';
 
 export class FormValidators {
 
+//requiredWith
+//requiredWithout
+//requiredWithAll
+//requriedWithoutAll
+//requiredUnless
 
   static arrayAtLeastOneHasToBeRequired() {
     return function (array: FormArray): InvalidValidationResult {
@@ -17,7 +22,6 @@ export class FormValidators {
           let valid =  FormValidators.requiredGroup(group) === null;
           return valid;
       });
-      //debugger
       return validControls.length >= 1 ? null : { invalidSomethng: true };
     };
   }

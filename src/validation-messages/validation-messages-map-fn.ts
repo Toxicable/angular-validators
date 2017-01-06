@@ -6,6 +6,7 @@ export interface ValidationMessageMapperFn {
 export function defaultValidationMessageMapper(validatorName: string, validatorValue?: any): string {
   let config: ValidationMessageMap = {
     required: 'Required',
+    requiredGroup: 'All fields in this group are required',
     minLength: `Minimum length ${validatorValue.requiredLength}`,
     maxLength: `Minimum length ${validatorValue.requiredLength}`,
     invalidUrl: `Invalid url`,
