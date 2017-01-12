@@ -9,6 +9,6 @@ export default {
     '@angular/forms': 'ng.forms',
     '@angular/common': 'ng.common',
     'rxjs/Observable': 'Rx',
-    'rxjs/add/operator/map': 'Rx.Observable'
+    'rxjs/add/operator/map': 'Rx.Observable.prototype'
   }
 }
