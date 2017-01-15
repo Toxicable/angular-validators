@@ -29,8 +29,6 @@ export class ValidationMessagesComponent {
           }
           return null;
         });
-      // run the update so that the observable emits the inital value
-      this.control.updateValueAndValidity();
 
     } else if (this.group) {
       this.errorMessages$ = this.group.statusChanges
@@ -41,6 +39,14 @@ export class ValidationMessagesComponent {
           }
           return null;
         });
+    }
+  }
+
+  ngAfterViewInit(){
+    // run the update so that the observable emits the inital value
+    if(this.control){
+      this.control.updateValueAndValidity();
+    }else if (this.group) {
       this.group.updateValueAndValidity();
     }
   }
