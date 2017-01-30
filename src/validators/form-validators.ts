@@ -15,6 +15,16 @@ export class FormValidators {
 //requiredWithAll
 //requriedWithoutAll
 //requiredUnless
+//coordinates https://en.wikipedia.org/wiki/World_Geodetic_System
+
+  /**
+  * Requried when the predicate evaluates to true
+  */
+  static requiredWhen(pred: (control: AbstractControl) => boolean):ValidatorFn{
+    return function (control: AbstractControl): InvalidValidationResult{
+      return pred(control) ? this.required(control) : null;
+    }
+  }
 
   static arrayAtLeastOneHasToBeRequired() {
     return function (array: FormArray): InvalidValidationResult {
@@ -26,6 +36,9 @@ export class FormValidators {
     };
   }
 
+  /**
+  * Applies the required validator on each child control
+  */
   static requiredGroup(group: FormGroup): InvalidValidationResult {
     let controlNames = Object.keys(group.controls);
     let validControls = controlNames
@@ -93,9 +106,8 @@ export class FormValidators {
     return validator(control) == null ? null : { invalidFirstCapital: true };
   }
 
-  // cross field validators
   /**
-  * Depricated
+  * Depricatedm as validator is being merged with Core: https://github.com/angular/angular/pull/14052
   */
   static compareFields(field1Name: string, field2Name: string) {
     return function (group: FormGroup): InvalidValidationResult {
@@ -108,7 +120,7 @@ export class FormValidators {
   }
 
   /**
-  * Compares the values of all fields passed
+  * Depricatedm as validator is being merged with Core: https://github.com/angular/angular/pull/14052
   */
   static comparison(...fields: string[]) {
     return function (group: FormGroup): InvalidValidationResult {

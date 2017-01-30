@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, FormArray, AbstractControl } from '@angular/forms';
-import { FormValidators } from '../src/validators/';
+import { FormValidators } from '../src/validators/form-validators';
 import { InvalidValidationResult } from '../src/validators/invalid-validation-result';
 
 describe('form validators', () => {
@@ -14,6 +14,13 @@ describe('form validators', () => {
       f2: new FormControl('')
     });
   });
+
+  describe('requiredWhen', () => {
+    it('should always be required when passed an always true pred', () => {
+      let pred = (control: AbstractControl) => true;
+
+    })
+  })
 
   describe('requiredGroup', () => {
     it('should error when controls are empty', () => {
