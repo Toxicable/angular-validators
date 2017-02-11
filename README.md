@@ -14,15 +14,12 @@ A component to easily display validation messages
 ```
 //imports
 import { ValidationMessagesModule } from 'angular-validation';
-//module imports
-imports: [ ValidationMessagesModule.withConfig() ] //provides default config
 //-or-
-imports: [ ValidationMessagesModule.withConfig(myCustomValidationMessageMapperFn) ] //provides your own maper function
-//please not that `myCustomValidationMessageMapperFn` must be of type `ValidationMessageMapperFn`
+to provide your own error message mapper function do this
+providers: [{ provide: 'validationMessageMapper', useValue: validationMessageMapper }]
+//please not that `validationMessageMapper` must be of type `ValidationMessageMapperFn`
 //usage
 <av-validation-messages [control]="myForm.controls.password"></av-validation-messages>
-//-or-
-<av-validation-messages [group]="myForm"></av-validation-messages>
 ```
 ###Validators
 ```
@@ -44,7 +41,7 @@ Credit Card(Visa, Master Card, American Express, Diners, Discover, JBC)
 
 Cross Field Validator
 ------
-Comparison 
+Comparison - depricated in faviour of equalsTo validator comming in Angular version 4.0.0
 
 @angular/form Validators
 --------------
