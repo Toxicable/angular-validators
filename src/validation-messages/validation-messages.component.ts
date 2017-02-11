@@ -1,7 +1,8 @@
-import { Component, Input, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Inject, ChangeDetectionStrategy, Optional } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ValidationMessageMapperFn } from './validation-messages-map-fn';
 import { Observable } from 'rxjs/Observable';
+import { defaultValidationMessageMapper } from './validation-messages-map-fn'
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -10,44 +11,30 @@ import 'rxjs/add/operator/map';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ValidationMessagesComponent {
-  @Input() control: FormControl;
-  @Input() group: FormGroup;
+  @Input() control: FormControl | FormGroup;
   errorMessages$: Observable<string>;
+  mapper: ValidationMessageMapperFn;
 
   constructor(
-    @Inject('validationMessageMapper') private mapper: ValidationMessageMapperFn
-  ) { }
-
-  ngOnInit() {
-    if (this.control) {
-      this.errorMessages$ = this.control.statusChanges
-        .map((status: string) => {
-          if (this.control.touched && status === 'INVALID') {
-            // since it's invalid we assume that it has at least 1 error in the `this.group.errors` object
-            let errorKeys = Object.keys(this.control.errors);
-            return this.mapper(errorKeys[0], this.control.errors[errorKeys[0]]);
-          }
-          return null;
-        });
-
-    } else if (this.group) {
-      this.errorMessages$ = this.group.statusChanges
-        .map((status: string) => {
-          if (this.group.touched && status === 'INVALID') {
-            let errorKeys = Object.keys(this.group.errors);
-            return this.mapper(errorKeys[0], this.group.errors[errorKeys[0]]);
-          }
-          return null;
-        });
-    }
+    @Inject('validationMessageMapper') @Optional() mapper: ValidationMessageMapperFn
+  ) {
+    this.mapper = mapper ? mapper : defaultValidationMessageMapper;
   }
 
-  ngAfterViewInit(){
+  ngOnInit() {
+    this.errorMessages$ = this.control.statusChanges
+      .map((status: string) => {
+        if (this.control.touched && status === 'INVALID' && this.control.errors) {
+          // since it's invalid we assume that it has at least 1 error in the `this.group.errors` object
+          let errorKeys = Object.keys(this.control.errors || {});
+          return this.mapper(errorKeys[0], this.control.errors[errorKeys[0]]);
+        }
+        return null;
+      });
+  }
+
+  ngAfterViewInit() {
     // run the update so that the observable emits the inital value
-    if(this.control){
-      this.control.updateValueAndValidity();
-    }else if (this.group) {
-      this.group.updateValueAndValidity();
-    }
+    this.control.updateValueAndValidity();
   }
 }

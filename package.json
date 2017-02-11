@@ -1,8 +1,8 @@
 {
   "name": "angular-validators",
-  "version": "0.0.0-alpha-4",
+  "version": "0.0.0-alpha.7",
   "description": "More validators for Angular (2+)",
-   "scripts": {
+  "scripts": {
     "karma": "karma start --single-run",
     "test:unit": "npm run karma",
     "test:ngc": "ngc -p ./spec/ngc/tsconfig.ngc.json",
@@ -17,18 +17,18 @@
     "prebuild": "npm run test && npm run clean:pre",
     "postbuild": "npm run clean:post && npm run copy",
     "build": "npm run build:js && npm run build:umd && npm run build:uglify",
-    "t" : "karma start",
-    "p" : "npm run build && npm publish release",
+    "t": "karma start",
+    "p": "npm run build && npm publish release",
     "posttest": "npm run clean:ngc"
   },
   "peerDependencies": {
-    "@angular/forms":"^2.0.0",
+    "@angular/forms": "^2.0.0",
     "@angular/core": "^2.0.0",
     "@angular/common": "^2.0.0",
     "rxjs": "^5.0.0"
   },
   "devDependencies": {
-    "@angular/forms":"^2.0.0",
+    "@angular/forms": "^2.0.0",
     "@angular/core": "^2.0.0",
     "@angular/common": "^2.0.0",
     "@angular/compiler": "^2.0.0",
