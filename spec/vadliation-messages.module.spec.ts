@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGE_MAPPER } from './../src/validation-messages/validation-messages-mapper-token';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
@@ -27,7 +28,7 @@ describe('validation messages module', () => {
     comp.control = new FormControl('', FormValidators.required);
 
     comp.ngOnInit();
-    comp.control.markAsTouched();
+    comp.control.markAsDirty();
     comp.errorMessages$.first().subscribe(msg => {
       expect(msg).toBe('Required');
     });
@@ -43,7 +44,9 @@ describe('validation messages module', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [ValidationMessagesModule.withConfig(mapper)]
+      imports: [ValidationMessagesModule],
+      providers: [{ provide: VALIDATION_MESSAGE_MAPPER, useValue: mapper }]
+
     });
     fixture = TestBed.createComponent(ValidationMessagesComponent);
     comp = fixture.componentInstance;
@@ -52,19 +55,11 @@ describe('validation messages module', () => {
     comp.control = new FormControl('', FormValidators.required);
 
     comp.ngOnInit();
-    comp.control.markAsTouched();
+    comp.control.markAsDirty();
     comp.errorMessages$.first().subscribe(msg => {
       expect(msg).toBe('Field Required');
     });
     fixture.detectChanges();
-  });
-
-  it('should throw when no undefined is passed as mapper fn', () => {
-    expect(() => ValidationMessagesModule.withConfig(undefined)).toThrow();
-  });
-
-  it('should throw when no null is passed as mapper fn', () => {
-  expect(() => ValidationMessagesModule.withConfig(null)).toThrow();
   });
 
 });

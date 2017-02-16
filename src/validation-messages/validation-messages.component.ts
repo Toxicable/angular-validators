@@ -1,8 +1,9 @@
+import { VALIDATION_MESSAGE_MAPPER } from './validation-messages-mapper-token';
 import { Component, Input, Inject, ChangeDetectionStrategy, Optional } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ValidationMessageMapperFn } from './validation-messages-map-fn';
 import { Observable } from 'rxjs/Observable';
-import { defaultValidationMessageMapper } from './validation-messages-map-fn'
+import { defaultValidationMessageMapper } from './validation-messages-map-fn';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -16,7 +17,7 @@ export class ValidationMessagesComponent {
   mapper: ValidationMessageMapperFn;
 
   constructor(
-    @Inject('validationMessageMapper') @Optional() mapper: ValidationMessageMapperFn
+    @Inject(VALIDATION_MESSAGE_MAPPER) @Optional() mapper: ValidationMessageMapperFn
   ) {
     this.mapper = mapper ? mapper : defaultValidationMessageMapper;
   }
@@ -24,7 +25,7 @@ export class ValidationMessagesComponent {
   ngOnInit() {
     this.errorMessages$ = this.control.statusChanges
       .map((status: string) => {
-        if (this.control.touched && status === 'INVALID' && this.control.errors) {
+        if (this.control.dirty && status === 'INVALID' && this.control.errors) {
           // since it's invalid we assume that it has at least 1 error in the `this.group.errors` object
           let errorKeys = Object.keys(this.control.errors || {});
           return this.mapper(errorKeys[0], this.control.errors[errorKeys[0]]);

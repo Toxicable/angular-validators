@@ -31,28 +31,12 @@ describe('validation messages component', () => {
     comp.control = new FormControl('', FormValidators.required);
 
     comp.ngOnInit();
-    comp.control.markAsTouched();
+    comp.control.markAsDirty();
     comp.errorMessages$.first().subscribe(msg => {
       expect(msg).not.toBeNull();
     });
     fixture.detectChanges();
 
-  }));
-
-  it('should display an error message for a group', async(() => {
-    comp.group = new FormGroup({
-      password: new FormControl('a'),
-      confirmPassword: new FormControl('')
-    },
-      FormValidators.comparison('password', 'confirmPassword')
-    );
-    el = fixture.debugElement.query(By.css('span')).nativeElement;
-    comp.ngOnInit();
-    comp.group.markAsTouched();
-    comp.errorMessages$.first().subscribe(msg => {
-      expect(msg).not.toBeNull();
-    });
-    fixture.detectChanges();
   }));
 
   it('should not display an error if it has not been touched', async(() => {
