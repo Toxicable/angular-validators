@@ -5,27 +5,21 @@
 Form Validators and a component to display them  
 Feel free to ping on on the angular/angular gitter if you have any issues
 
-##Installation
+## Installation
 ```
 npm install --save angular-validators
 ```
-###Validation Messages
+### Validation Messages
 A component to easily display validation messages
 ```
-//imports
 import { ValidationMessagesModule } from 'angular-validation';
-//-or-
-to provide your own error message mapper function do this
-providers: [{ provide: 'validationMessageMapper', useValue: validationMessageMapper }]
-//please not that `validationMessageMapper` must be of type `ValidationMessageMapperFn`
-//usage
+
 <av-validation-messages [control]="myForm.controls.password"></av-validation-messages>
 ```
-###Validators
+### Validators
 ```
-//imports
 import { FormValidators } from 'angular-validators';
-//usage
+
 email: ['', FormValidators.required]
 ```
 
@@ -41,7 +35,7 @@ Credit Card(Visa, Master Card, American Express, Diners, Discover, JBC)
 
 Cross Field Validator
 ------
-Comparison - depricated in faviour of equalsTo validator comming in Angular version 4.0.0
+Comparison - needs rework
 
 @angular/form Validators
 --------------
