@@ -12,7 +12,7 @@ npm install --save angular-validators
 ### Validation Messages
 A component to easily display validation messages
 ```
-import { ValidationMessagesModule } from 'angular-validation';
+import { ValidationMessagesModule } from 'angular-validators';
 
 <av-validation-messages [control]="myForm.controls.password"></av-validation-messages>
 ```
