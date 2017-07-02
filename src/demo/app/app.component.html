@@ -1,0 +1,6 @@
+<form [formGroup]="myForm">
+  <input formControlName="password" />
+  <av-validation-messages [control]="myForm.get('password')"></av-validation-messages>
+  <input formControlName="confirmPassword" />
+  <av-validation-messages [control]="myForm.get('confirmPassword')"></av-validation-messages>
+</form>
