@@ -1,6 +1,7 @@
 import { FormControl, FormGroup, FormArray, AbstractControl } from '@angular/forms';
-import { FormValidators } from './';
-import { InvalidValidationResult } from './';
+import { InvalidValidationResult } from './invalid-validation-result';
+import { FormValidators } from './form-validators';
+
 
 describe('form validators', () => {
   let control: FormControl;

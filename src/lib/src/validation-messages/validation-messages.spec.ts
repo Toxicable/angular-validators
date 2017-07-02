@@ -3,10 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ComponentFixture, TestBed, fakeAsync, tick, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
-import { ValidationMessagesComponent, ValidationMessagesModule, defaultValidationMessageMapper } from './';
-import { FormValidators } from './../validators';
-
+import { FormValidators } from './../validators/form-validators';
+import { defaultValidationMessageMapper } from './validation-messages-map';
+import { ValidationMessagesComponent } from './validation-messages';
 
 import 'rxjs/add/operator/first';
 
@@ -29,8 +28,7 @@ describe('validation messages component', () => {
   it('should display an error message for a control', async(() => {
     comp.control = new FormControl('', FormValidators.required);
 
-    comp.ngOnInit();
-    comp.control.markAsDirty();
+    comp._control.markAsDirty();
     comp.errorMessages$.first().subscribe(msg => {
       expect(msg).not.toBeNull();
     });
@@ -41,7 +39,6 @@ describe('validation messages component', () => {
   it('should not display an error if it has not been touched', async(() => {
     comp.control = new FormControl('', FormValidators.required);
 
-    comp.ngOnInit();
     comp.errorMessages$.first().subscribe(msg => {
       expect(msg).toBeNull();
     });
